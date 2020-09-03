@@ -1,6 +1,8 @@
 var express       = require("express"),
     app           = express(),
-    bodyParser    = require("body-parser");
+    bodyParser    = require("body-parser"),
+    mongoose      = require("mongoose"),
+    seedDB        = require("./seed");
 
 //============
 // app config
@@ -10,14 +12,22 @@ app.set("view engine" , "ejs");
 app.use(express.static(__dirname + "/public"));
 
 //================
+// mongo config
+//================
+seedDB();
+mongoose.connect("mongodb://localhost/Exchange" , {useNewUrlParser: true , useUnifiedTopology: true});
+
+//================
 // require routes
 //================
 var indexRoutes = require("./routes/index");
+var itemRoutes = require("./routes/item")
 
 //============
 // use routes
 //============
 app.use('/', indexRoutes);
+app.use('/item' , itemRoutes);
 
 //=====================
 // listen on port 3000
