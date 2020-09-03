@@ -12,12 +12,14 @@ app.use(express.static(__dirname + "/public"));
 //================
 // require routes
 //================
-var indexRoutes = require("./routes/index");
+var indexRoutes = require("./routes/index"),
+    userRoutes  = require("./routes/user");
 
 //============
 // use routes
 //============
 app.use('/', indexRoutes);
+app.use('/user', userRoutes);
 
 //=====================
 // listen on port 3000

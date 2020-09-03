@@ -1,0 +1,43 @@
+<%- include("../partials/header"); %>
+<h1 class="center margin-top"> Edit Profile </h1>
+<div style="width: 70%; margin: 40px auto;">
+    <form action="/user/<%=user._id%>?_method=PUT" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" name="name" id="name" value="<%= user.name %>">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input class="form-control" type="text" name="username" id="username" value="<%= user.username %>">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Contact Number</label>
+                    <input class="form-control" type="text" name="phone" id="phone" value="<%= user.phone %>">
+                </div>   
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="email" name="email" id="email" value="<%= user.email %>">
+                </div> 
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input class="form-control" type="password" name="password" id="password">
+                </div>
+                <div class="form-group">
+                    <label for="password_cnf">Confirm Password</label>
+                    <input class="form-control" type="password" name="password_cnf" id="password_cnf">
+                    <p id="note">Leave blank if you do not want to change the password</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group center"> 
+            <button class="btn btn-dark btn-padding">Update</button>
+            <button class="btn btn-secondary btn-padding">Back</button>
+        </div>
+    </form>
+</div>
+<%- include("../partials/footer"); %>
