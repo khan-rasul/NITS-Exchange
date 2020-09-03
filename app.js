@@ -12,7 +12,7 @@ app.set("view engine" , "ejs");
 app.use(express.static(__dirname + "/public"));
 
 //================
-// mongo config
+// database config
 //================
 seedDB();
 mongoose.connect("mongodb://localhost/Exchange" , {useNewUrlParser: true , useUnifiedTopology: true});

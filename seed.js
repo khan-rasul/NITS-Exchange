@@ -14,15 +14,15 @@ function seedDB(){
             console.log(err);
         }
         console.log("Items Removed");
-    });
-    data.forEach(function(item){
-        Item.create(item , function(err){
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log("Item Added");
-            }
+        data.forEach(function(item){
+            Item.create(item , function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log("Item Added");
+                }
+            });
         });
     });
 }
