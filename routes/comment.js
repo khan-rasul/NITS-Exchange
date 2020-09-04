@@ -29,15 +29,25 @@ router.post("/", function(req , res){
 
 //delete comment
 router.delete("/:commentId", function(req, res){
-    Comment.findByIdAndRemove(req.params.commentId, function(err){      
-        if(err){
+    Item.findByIdAndUpdate(req.params.id, {
+      $pull: {
+        comments: req.params.commentId
+      }
+    }, function(err) {
+      if(err){ 
             console.log(err);
-        }
-        else{
-            res.redirect("/item/" + req.params.id);
-        } 
+      } else {
+            Comment.findByIdAndRemove(req.params.commentId, function(err){      
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.redirect("/item/" + req.params.id);
+            } 
+        });
+      }
     });
-});
+  });
 
 // export module
 module.exports = router;
