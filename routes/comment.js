@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router({mergeParams: true});
 var Item = require("../models/item");
 var Comment = require("../models/comment");
+const comment = require('../models/comment');
 
 // create new comment
 router.post("/", function(req , res){
@@ -23,6 +24,18 @@ router.post("/", function(req , res){
                 res.redirect('/item/' + item._id);
             }
          });
+        }
+    });
+});
+
+//update comment
+router.put("/:commentId", function(req, res){
+    Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, updatedComment){
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.redirect("/item/" + req.params.id);
         }
     });
 });
