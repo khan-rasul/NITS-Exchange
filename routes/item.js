@@ -5,12 +5,10 @@ var Item = require("../models/item");
 // root route
 router.get("/" , function(req , res){
     Item.find({} , function(err , items){
-        if(err)
-        {
+        if(err){
             console.log(err);
         }
-        else
-        {
+        else{
             res.render("item/index" , {items : items});
         }
     })  
@@ -34,7 +32,7 @@ router.post("/", function(req , res){
 
 // view item
 router.get("/:id" , function(req , res){
-    Item.findById(req.params.id , function(err , item){
+    Item.findById(req.params.id).populate("comments").exec( function(err , item){
         if(err){
             console.log(err);
         }

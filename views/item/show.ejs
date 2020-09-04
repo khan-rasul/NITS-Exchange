@@ -11,4 +11,24 @@
         <%= item.price %>
     </dd>
 </dl>
+<div>
+    <div class="row">
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/item/<%= item._id %>/comments" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="comment[text]" placeholder="Add a comment">
+                    <button class="btn btn-lg btn-primary btn-block">Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <% item.comments.forEach(function(comment){ %>
+        <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+        <form action="/item/<%= item._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-xs btn-danger">Delete</button>
+        </form>
+    <% }); %>
+</div>
+
+
 <%- include("../partials/footer"); %>
