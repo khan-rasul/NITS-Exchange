@@ -1,11 +1,8 @@
-function fun(){
-    console.log("working");
-    $("#submit").removeAttr("disabled");
-};
+$(".cancel").click(function() {
+  $(this).fadeOut();
+});
 
-$("#submit").addEventListener('keyup', function(event) {
-    if (event.code === 'Enter') {
-	  event.preventDefault();
-      document.querySelector('form').submit();
-    }
-  });
+$(".submit").click(function() {
+    $(this).parent().find("input").removeAttr("disabled");
+    $(this).parent().find(".toggle").fadeIn();
+});
