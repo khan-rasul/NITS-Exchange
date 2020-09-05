@@ -7,10 +7,12 @@ router.get("/" , function(req , res){
     res.render("landing");
 })
 
-// sign in
+// sign in form
 router.get("/signin" , function(req , res){
     res.render("signin");
 })
+
+// sign in logic
 router.post("/signin" ,passport.authenticate("local", 
 {
     successRedirect: "/user",

@@ -16,13 +16,13 @@ var users = [
         name: "Eivor",
         username: "1715037",
         email: "eivor@valhalla.sky",
-        phone: "1234567890",
+        phone: "1234567890"
     },
     {
         name: "Kassandra",
         username: "1715011",
         email: "kassandra@odyssey.gr",
-        phone: "9876543210",
+        phone: "9876543210"
     }
 ]
 

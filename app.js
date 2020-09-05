@@ -19,9 +19,9 @@ app.use(methodOverride("_method"));
 //================
 // require routes
 //================
-var indexRoutes = require("./routes/index"),
-    userRoutes  = require("./routes/user"),
-    itemRoutes  = require("./routes/item"),
+var indexRoutes    = require("./routes/index"),
+    userRoutes     = require("./routes/user"),
+    itemRoutes     = require("./routes/item"),
     commentRoutes  = require("./routes/comment");
 
 //=================
@@ -40,9 +40,17 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new localStrategy({usernameField: "username"}, User.authenticate()));
+passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+//=================
+// user middleware
+//=================
+app.use(function(req , res , next){
+    res.locals.currentUser = req.user;
+    next();
+});
 
 //============
 // use routes
@@ -50,7 +58,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/', indexRoutes);
 app.use('/user', userRoutes);
 app.use('/item' , itemRoutes);
-app.use("/item/:id/comment", commentRoutes);
+app.use('/item/:id/comment', commentRoutes);
 
 //========================
 // listening on port 3000
