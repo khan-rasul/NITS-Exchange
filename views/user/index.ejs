@@ -1,13 +1,22 @@
 <%- include("../partials/header"); %>
-<div class="row margin-top">
-    <div class="col-md-3 grey-bkg">
-        <h1 class="margin-top" style="margin-bottom: 1.5rem;"><%= user.name %></h1>
-        <h6 class="font-grey"><%= user.username %></h6>
-        <!-- <h6 class="font-grey"><%= user.phone %></h6> -->
-        <p style="margin-top: 3rem; margin-bottom: 1.5rem;">
-            <a href="/user/:id/edit" class="btn btn-dark">Edit Profile</a>
-        </p>
+<div class = "jumbotron">
+    <div class = container>
+        <h1>Users</h1>
     </div>
-    <div class="col-md-9">
-        <p>hgfhg</p>
+</div>
+
+<div class = "row">
+    <% users.forEach(user=>{ %>
+        <div class = "col-md-4 col-sm-6">
+            <div class="card" style="margin: 1em">
+                <div class="card-body" style="margin: 2em">
+                  <h5 class="card-title text-center"><%= user.name %></h5>
+                    <div class = "text-center">
+                        <a href="/user/<%= user._id%>" class="btn btn-primary btn-sm">Details</a>                    
+                    </div>
+                </div>
+              </div>
+        </div>
+    <%});%>
+</div>
 <%- include("../partials/footer"); %>

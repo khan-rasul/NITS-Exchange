@@ -3,7 +3,10 @@ var express        = require("express"),
     bodyParser     = require("body-parser"),
     mongoose       = require("mongoose"),
     seedDB         = require("./seed"),
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
+    passport       = require("passport"),
+    localStrategy  = require("passport-local").Strategy,
+    User           = require("./models/user");
 
 //============
 // app config
@@ -14,18 +17,32 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
 //================
-// database config
-//================
-seedDB();
-mongoose.connect("mongodb://localhost/Exchange" , {useNewUrlParser: true , useUnifiedTopology: true});
-
-//================
 // require routes
 //================
 var indexRoutes = require("./routes/index"),
     userRoutes  = require("./routes/user"),
     itemRoutes  = require("./routes/item"),
-    commentRoutes  = require("./routes/comment")
+    commentRoutes  = require("./routes/comment");
+
+//=================
+// database config
+//=================
+mongoose.connect("mongodb://localhost/Exchange" , {useNewUrlParser: true , useUnifiedTopology: true});
+seedDB();
+
+//=================
+// passport config
+//=================
+app.use(require("express-session")({
+    secret: "Colt Steele taught me this",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy({usernameField: "username"}, User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //============
 // use routes
@@ -33,11 +50,11 @@ var indexRoutes = require("./routes/index"),
 app.use('/', indexRoutes);
 app.use('/user', userRoutes);
 app.use('/item' , itemRoutes);
-app.use("/item/:id/comments", commentRoutes);
+app.use("/item/:id/comment", commentRoutes);
 
-//=====================
-// listen on port 3000
-//=====================
+//========================
+// listening on port 3000
+//========================
 app.listen(3000 , function(){
     console.log("Server Started on port 3000. :)");
 });
