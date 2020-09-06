@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router({mergeParams: true});
 var Item = require("../models/item");
 var Comment = require("../models/comment");
+const comment = require('../models/comment');
 
 // create new comment
 router.post("/", function(req , res){
@@ -27,17 +28,39 @@ router.post("/", function(req , res){
     });
 });
 
-//delete comment
-router.delete("/:commentId", function(req, res){
-    Comment.findByIdAndRemove(req.params.commentId, function(err){      
+//update comment
+router.put("/:commentId", function(req, res){
+    Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, updatedComment){
         if(err){
             console.log(err);
         }
         else{
             res.redirect("/item/" + req.params.id);
-        } 
+        }
     });
 });
+
+//delete comment
+router.delete("/:commentId", function(req, res){
+    Item.findByIdAndUpdate(req.params.id, {
+      $pull: {
+        comments: req.params.commentId
+      }
+    }, function(err) {
+      if(err){ 
+            console.log(err);
+      } else {
+            Comment.findByIdAndRemove(req.params.commentId, function(err){      
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.redirect("/item/" + req.params.id);
+            } 
+        });
+      }
+    });
+  });
 
 // export module
 module.exports = router;
