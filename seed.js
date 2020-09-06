@@ -4,7 +4,7 @@ var Comment = require("./models/comment");
 var User = require("./models/user");
 const user = require("./models/user");
 
-var data = [
+var items = [
     {title: "Drafter" , price: 150},
     {title: "Apron" , price: 200},
     {title: "Grewal" , price: 300},
@@ -58,29 +58,29 @@ function seedDB(){
             console.log(err);
         }
         console.log("Items Removed");
-        data.forEach(function(item){
-            Item.create(item, function(err, item){
-                if(err){
-                    console.log(err);
-                }
-                else{
-                    console.log("Item Added");
-                    Comment.create({
-                        text: "Seed Comment",
-                        author: "Neetya"
-                    }, function(err, comment){
-                        if(err){
-                            console.log(err);
-                        }
-                        else{
-                            item.comments.push(comment);
-                            item.save();
-                            console.log("Added comment");
-                        }
-                    });
-                }
-            });
-        });
+        // items.forEach(function(item){
+        //     Item.create(item, function(err, item){
+        //         if(err){
+        //             console.log(err);
+        //         }
+        //         else{
+        //             console.log("Item Added");
+        //             // Comment.create({
+        //             //     text: "Seed Comment",
+        //             //     author: "Neetya"
+        //             // }, function(err, comment){
+        //             //     if(err){
+        //             //         console.log(err);
+        //             //     }
+        //             //     else{
+        //             //         item.comments.push(comment);
+        //             //         item.save();
+        //             //         console.log("Added comment");
+        //             //     }
+        //             // });
+        //         }
+        //     });
+        // });
     });
 }
 module.exports = seedDB;

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+const middleware = require("../middleware");
 
 // root route
 router.get("/", function(req, res){
@@ -49,7 +50,7 @@ router.get("/:id" , function(req , res){
     })
 });
 // edit user details route
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", middleware.checkUserOwnership, function(req, res){
     User.findById(req.params.id , function(err , user){
         if(err){
             console.log(err);
@@ -59,7 +60,7 @@ router.get("/:id/edit", function(req, res){
         }
     })
 });
-router.put("/:id" , function(req , res){
+router.put("/:id", middleware.checkUserOwnership, function(req , res){
     console.log(req.body.user);
     User.findByIdAndUpdate(req.params.id , req.body.user, function(err , user){
         if(err){
@@ -80,7 +81,7 @@ router.put("/:id" , function(req , res){
         res.redirect( "/user");
     });
 });
-router.delete("/:id" , function(req , res){
+router.delete("/:id", middleware.checkUserOwnership, function(req , res){
     User.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);

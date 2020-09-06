@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Item = require("../models/item");
+var middleware = require("../middleware");
 
 // root route
 router.get("/" , function(req , res){
@@ -15,16 +16,19 @@ router.get("/" , function(req , res){
 });
 
 // add new item
-router.get("/new" , function(req , res){
+router.get("/new" , middleware.isLoggedIn, function(req , res){
     res.render("item/new");
 });
 
-router.post("/", function(req , res){
+router.post("/", middleware.isLoggedIn, function(req , res){
     Item.create(req.body.item , function(err , newItem) {
         if(err){
             console.log(err);
         }
         else{
+            newItem.author.id = req.user._id;
+            newItem.author.name = req.user.name;
+            newItem.save();
             res.redirect("/item");
         }
     });

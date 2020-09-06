@@ -15,15 +15,16 @@ router.get("/signin" , function(req , res){
 // sign in logic
 router.post("/signin" ,passport.authenticate("local", 
 {
-    successRedirect: "/user",
+    successRedirect: "/item",
     failureRedirect: "/signin"
 }), function(req, res){
 });
 
 // sign out
 router.get("/signout" , function(req , res){
+    // console.log(req.headers.referer);
     req.logout();
-    res.redirect("/user");
+    res.redirect("back");
 
 })
 // export module

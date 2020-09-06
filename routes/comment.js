@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router({mergeParams: true});
 var Item = require("../models/item");
 var Comment = require("../models/comment");
-const comment = require('../models/comment');
+var middleware = require("../middleware");
 
 // create new comment
-router.post("/", function(req , res){
+router.post("/", middleware.isLoggedIn ,function(req , res){
     Item.findById(req.params.id, function(err, item){
         if(err){
             console.log(err);
@@ -15,9 +15,8 @@ router.post("/", function(req , res){
             if(err){
                 console.log(err);
             } else {
-                // comment.author.id = req.user._id;
-                // comment.author.username = req.user.username;
-                comment.author = "Neetya";
+                comment.author.id = req.user._id;
+                comment.author.name = req.user.name;
                 comment.save();
                 item.comments.push(comment);
                 item.save();
@@ -29,7 +28,7 @@ router.post("/", function(req , res){
 });
 
 //update comment
-router.put("/:commentId", function(req, res){
+router.put("/:commentId", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, updatedComment){
         if(err){
             console.log(err);
@@ -41,7 +40,7 @@ router.put("/:commentId", function(req, res){
 });
 
 //delete comment
-router.delete("/:commentId", function(req, res){
+router.delete("/:commentId", middleware.checkCommentOwnership, function(req, res){
     Item.findByIdAndUpdate(req.params.id, {
       $pull: {
         comments: req.params.commentId

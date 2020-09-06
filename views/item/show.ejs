@@ -11,10 +11,14 @@
     <dd class = "col-sm-10">
         <%= item.price %>
     </dd>
+    <dt class = "col-sm-2">Created By: </dt>
+    <dd class = "col-sm-10">
+        <%= item.author.name %>
+    </dd>
 </dl>
 <div>
     <div>
-        <form class ="form-inline" action="/item/<%= item._id %>/comments" method="POST">
+        <form class ="form-inline" action="/item/<%= item._id %>/comment" method="POST">
             <div class="form-group mx-sm-1">
                 <input type="text" name="comment[text]" placeholder="Add a comment">
             </div>
@@ -24,13 +28,13 @@
     </div>
 
     <% item.comments.forEach(function(comment){ %>
-        <p><strong><%= comment.author %></strong></p>
+        <p><strong><%= comment.author.name %></strong></p>
         <div>
-            <form class="disp-inline" action="/item/<%= item._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+            <form class="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=PUT" method="POST">
                 <input type="text" name="comment[text]" value="<%= comment.text %>" disabled>
             </form>
             <button class="btn btn-xs btn-warning disp-inline submit"> Edit</button>
-            <form class ="disp-inline" action="/item/<%= item._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+            <form class ="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-xs btn-danger">Delete</button>
             </form>
             <p class="note hidden toggle">Press Enter to update, else click <a class= "cancel" href="/item/<%= item._id %>">cancel</a></p>

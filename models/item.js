@@ -2,6 +2,13 @@ var mongoose = require("mongoose");
 var itemSchema = mongoose.Schema({
     title : String,
     price : Number,
+    author: {
+        id: {
+           type: mongoose.Schema.Types.ObjectId,
+           ref: "User"
+        },
+        name: String
+     },
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
