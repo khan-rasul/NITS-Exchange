@@ -1,17 +1,26 @@
 <%- include("../partials/header"); %>
-<!-- $("h1").css("color", "yellow"); -->
 <h1> Item </h1>
 <hr />
-<dl class="row">
-    <dt class = "col-sm-2">Title</dt>
-    <dd class = "col-sm-10">
-        <%= item.title %>
-    </dd>
-    <dt class = "col-sm-2">Price</dt>
-    <dd class = "col-sm-10">
-        <%= item.price %>
-    </dd>
-</dl>
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">Title</dt>
+        <dd class = "col-sm-10">
+            <%= item.title %>
+        </dd>
+        <dt class = "col-sm-2">Price</dt>
+        <dd class = "col-sm-10">
+            <%= item.price %>
+        </dd>
+        <dt class = "col-sm-2">Image</dt>
+        <dd class = "col-sm-10">
+            <img src="" class="responsive">
+        </dd>
+    </dl>
+    <a class="btn btn-warning" href="/item/<%= item._id %>/edit">EDIT</a>
+    <form action="/item/<%= item._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">DELETE</button>
+    </form>
+</div>
 <div>
     <div>
         <form class ="form-inline" action="/item/<%= item._id %>/comments" method="POST">
