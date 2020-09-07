@@ -1,3 +1,45 @@
+#commentForm{
+    display: none;
+    position: fixed;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    top: 20%;
+    left: 40%;
+    padding: 10px;
+    width: 350px;
+    height: 200px;
+    max-height: 400px;
+    box-shadow: 0px 0px 1px 5000px rgba(0,0,0,0.4);
+}
+#editForm{
+    display: none;
+    position: fixed;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    top: 20%;
+    left: 40%;
+    padding: 10px;
+    width: 350px;
+    height: 200px;
+    max-height: 400px;
+    box-shadow: 0px 0px 1px 5000px rgba(0,0,0,0.4);
+}
+#inputboxNew{
+    overflow: hidden; 
+    min-height:60px;
+    max-height: 260px;
+    width: 300px;
+    resize: none;
+}
+#inputboxEdit{
+    overflow: hidden; 
+    min-height:60px;
+    max-height: 260px;
+    width: 300px;
+    resize: none;
+}
+
+
 .btn-padding{
     margin: auto 1.5rem;
     padding-left: 1.5rem;
@@ -15,13 +57,12 @@
 .grey-bkg{
     background-color: #e6e8e6;
 }
-.hidden{
-    display: none;
+.hover{
+    opacity: 0.8;
+}
+.hover:hover{
+    opacity: 1;
 }
 .margin-top{
     margin: 25px 0;
-}
-.note{
-    font-size: 0.8rem;
-    font-weight: 300;
 }

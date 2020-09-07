@@ -1,5 +1,4 @@
 <%- include("../partials/header"); %>
-<!-- $("h1").css("color", "yellow"); -->
 <h1> Item </h1>
 <hr />
 <dl class="row">
@@ -17,30 +16,46 @@
     </dd>
 </dl>
 <div>
-    <div>
-        <form class ="form-inline" action="/item/<%= item._id %>/comment" method="POST">
-            <div class="form-group mx-sm-1">
-                <input type="text" name="comment[text]" placeholder="Add a comment">
+    <button class="btn btn-xs btn-primary disp-inline hover" onclick="openNewForm()">Add a comment</button>
+    <div id="commentForm">
+        <form action="/item/<%= item._id %>/comment" method="POST">
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true" class="hover" onclick="closeNewForm()">&times;</span>
+            </button>
+            <div class="form-group mx-sm-1 center">
+                <textarea type="text" name="comment[text]" class="margin-top" id="inputboxNew" placeholder="Add a comment..."></textarea>
             </div>
-            <button class="btn btn-xs btn-primary disp-inline">Comment</button>
-            
+            <div class="center">
+                <button class="btn btn-xs btn-primary disp-inline">Comment</button>
+            </div>
         </form>
     </div>
 
     <% item.comments.forEach(function(comment){ %>
-        <p><strong><%= comment.author.name %></strong></p>
         <div>
-            <form class="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=PUT" method="POST">
-                <input type="text" name="comment[text]" value="<%= comment.text %>" disabled>
-            </form>
-            <button class="btn btn-xs btn-warning disp-inline submit"> Edit</button>
+            <p><strong><%= comment.author.name %></strong></p>
+            <p><%= comment.text %></p>
+
+            <button class="btn btn-xs btn-warning disp-inline hover" onclick="openEditForm()">Edit</button>
             <form class ="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-xs btn-danger">Delete</button>
             </form>
-            <p class="note hidden toggle">Press Enter to update, else click <a class= "cancel" href="/item/<%= item._id %>">cancel</a></p>
+
+            <div id="editForm">
+                <form class="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=PUT" method="POST">
+                    <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true" class="hover" onclick="closeEditForm()">&times;</span>
+                    </button>
+                    <div class="form-group mx-sm-1 center">
+                        <textarea type="text" name="comment[text]" class="margin-top" id="inputboxEdit"><%= comment.text %></textarea>
+                    </div>
+                    <div class="center">
+                        <button class="btn btn-xs btn-primary disp-inline">Update</button>
+                    </div>
+                </form>
+            </div>
         </div>   
     <% }); %>
 </div>
-
 
 <%- include("../partials/footer"); %>
