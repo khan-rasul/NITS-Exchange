@@ -23,6 +23,7 @@ module.exports = {
             res.redirect('/item/' + req.params.id);
         }
       });
+      return;
     }
     req.flash('error', 'You must be signed in to do that!');
     res.redirect('/signin');
@@ -41,6 +42,7 @@ module.exports = {
             res.redirect('/item/' + req.params.id);
         }
       });
+      return;
     }
     req.flash('error', 'You must be signed in to do that!');
     res.redirect('/signin');
@@ -59,6 +61,7 @@ module.exports = {
             res.redirect('/user/' + req.params.id);
         }
       });
+      return;
     }
     req.flash('error', 'You must be signed in to do that!');
     res.redirect('/signin');
