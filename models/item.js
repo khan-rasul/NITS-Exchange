@@ -9,6 +9,12 @@ var itemSchema = mongoose.Schema({
         },
         name: String
      },
+    images:[
+        { 
+            data: Buffer, 
+            contentType: String 
+        }
+    ],
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
