@@ -24,30 +24,31 @@ router.get("/new" , function(req , res){
 router.post("/", function(req , res){
     upload(req, res, (err) => {
         if(err){
-            console.log(error);
-            if (error.code === "LIMIT_UNEXPECTED_FILE")
+            if(err.code === "LIMIT_FILE_SIZE")
+            res.send("File too large.");
+            if (err.code === "LIMIT_UNEXPECTED_FILE")
             res.send("Upload max 5 files.");
             // error to be included in flash message
             // res.redirect("item/new");
         }
         else{
-            console.log(req.files);
-            // var imgUrls = [];
-            // req.files.forEach(function(file){
-            //     var img = {path: "file/"+file.filename, type: file.id};
-            //     imgUrls.push(img);
-            // });
-            // Item.create(req.body.item, function(err, item) {
-            // if(err){
-            //     console.log("error " + err);
-            // }
-            // else{
-            //     item.images = imgUrls;
-            //     item.save();
-            //     console.log(item);
-            //     res.redirect("/item");
-            // }
-        // });
+            // console.log(req.files);
+            var imgs = [];
+            req.files.forEach(function(file){
+                var img = {data: file.buffer, contentType: "image/jpeg"};
+                imgs.push(img);
+            });
+            Item.create(req.body.item, function(err, item) {
+            if(err){
+                console.log("error " + err);
+            }
+            else{
+                item.images = imgs;
+                item.save();
+                console.log(item);
+                res.redirect("/item");
+            }
+        });
         }
     });
 });

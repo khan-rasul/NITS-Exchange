@@ -3,7 +3,10 @@ var itemSchema = mongoose.Schema({
     title : String,
     price : Number,
     images:[
-        {url: String}
+        { 
+            data: Buffer, 
+            contentType: String 
+        }
     ],
     comments: [
         {

@@ -18,6 +18,10 @@
 .hidden{
     display: none;
 }
+.image{
+    width: 200px;
+    height: 200px;
+}
 .margin-top{
     margin: 25px 0;
 }

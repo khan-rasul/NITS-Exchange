@@ -5,7 +5,7 @@ var multer = require("multer"),
 var storage = multer.memoryStorage();
 var upload = multer({
   storage: storage,
-  limits: {fileSize: 15000000},
+  limits: {fileSize: 10000000},
   fileFilter: function(req, file, cb){
     var filetypes=/jpeg|jpg|png/;
     var extname = filetypes.test(path.extname(file.originalname));
