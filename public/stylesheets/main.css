@@ -25,3 +25,11 @@
     font-size: 0.8rem;
     font-weight: 300;
 }
+.flash-message{
+    margin-top: 9px;
+    padding: 9px;
+    padding-left: 15px;
+}
+.jumbotron{
+    margin-top: 9px;
+}

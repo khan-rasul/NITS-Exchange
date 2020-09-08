@@ -22,20 +22,22 @@
             <div class="form-group mx-sm-1">
                 <input type="text" name="comment[text]" placeholder="Add a comment">
             </div>
-            <button class="btn btn-xs btn-primary disp-inline">Comment</button>
+            <button class="btn btn-sm btn-primary disp-inline">Comment</button>
             
         </form>
     </div>
 
-    <% item.comments.forEach(function(comment){ %>
-        <p><strong><%= comment.author.name %></strong></p>
+    <% item.comments.forEach(function(comment){ %> 
         <div>
+            <p><strong><%= comment.author.name %></strong></p>
             <form class="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=PUT" method="POST">
                 <input type="text" name="comment[text]" value="<%= comment.text %>" disabled>
             </form>
-            <button class="btn btn-xs btn-warning disp-inline submit"> Edit</button>
+        </div>
+        <div>
+            <button class="btn btn-sm btn-warning disp-inline submit"> Edit</button>
             <form class ="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-xs btn-danger">Delete</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
             </form>
             <p class="note hidden toggle">Press Enter to update, else click <a class= "cancel" href="/item/<%= item._id %>">cancel</a></p>
         </div>   
