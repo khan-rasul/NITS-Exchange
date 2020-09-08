@@ -1,20 +1,33 @@
 <%- include("../partials/header"); %>
 <h1> Item </h1>
 <hr />
-<dl class="row">
-    <dt class = "col-sm-2">Title</dt>
-    <dd class = "col-sm-10">
-        <%= item.title %>
-    </dd>
-    <dt class = "col-sm-2">Price</dt>
-    <dd class = "col-sm-10">
-        <%= item.price %>
-    </dd>
-    <dt class = "col-sm-2">Created By: </dt>
-    <dd class = "col-sm-10">
-        <%= item.author.name %>
-    </dd>
-</dl>
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">Title</dt>
+        <dd class = "col-sm-10">
+            <%= item.title %>
+        </dd>
+        <dt class = "col-sm-2">Price</dt>
+        <dd class = "col-sm-10">
+            <%= item.price %>
+        </dd>
+        <dt class = "col-sm-2">Created By: </dt>
+        <dd class = "col-sm-10">
+            <%= item.author.name %>
+        </dd>
+        <dt class = "col-sm-2">Image</dt>
+        <dd class = "col-sm-10">
+            <% item.images.forEach(function(image){ %>
+                <img src="data:image/<%=image.contentType%>;base64, 
+                     <%=image.data.toString('base64')%>" class="image">
+            <% }); %>
+        </dd>
+    </dl>
+    <a class="btn btn-warning" href="/item/<%= item._id %>/edit">EDIT</a>
+    <form action="/item/<%= item._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">DELETE</button>
+    </form>
+</div>
 <div>
     <button class="btn btn-xs btn-primary disp-inline hover" onclick="openNewForm()">Add a comment</button>
     <div id="commentForm">
