@@ -10,6 +10,7 @@
     height: 200px;
     max-height: 400px;
     box-shadow: 0px 0px 1px 5000px rgba(0,0,0,0.4);
+    background: #f1f1f1;
 }
 #editForm{
     display: none;
@@ -23,6 +24,7 @@
     height: 200px;
     max-height: 400px;
     box-shadow: 0px 0px 1px 5000px rgba(0,0,0,0.4);
+    background: #f1f1f1;
 }
 #inputboxNew{
     overflow: hidden; 
@@ -45,6 +47,18 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
+.carousel-indicators{
+    position: absolute;
+    right: 0;
+}
+.carousel-control-next{
+    position: absolute;
+    right: 0;
+}
+.relative{
+    position: relative;
+    width: 400px;
+}
 .center{
     text-align: center; 
 }
@@ -64,8 +78,8 @@
     opacity: 1;
 }
 .image{
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
 }
 .margin-top{
     margin: 25px 0;
