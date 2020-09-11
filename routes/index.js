@@ -16,15 +16,16 @@ router.get("/signin" , function(req , res){
 router.post("/signin" ,passport.authenticate("local", 
 {
     successRedirect: "/item",
-    failureRedirect: "/signin"
+    failureRedirect: "/signin",
+    successFlash: "Welcome to NITS Exchange",
+    failureFlash: true
 }), function(req, res){
 });
 
 // sign out
 router.get("/signout" , function(req , res){
-    // console.log(req.headers.referer);
     req.logout();
-    res.redirect("back");
+    res.redirect("/item");
 
 })
 // export module

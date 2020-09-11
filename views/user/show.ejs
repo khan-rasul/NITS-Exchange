@@ -1,25 +1,24 @@
 <%- include("../partials/header"); %>
-<h1> User </h1>
-<hr />
-<dl class="row">
-    <dt class = "col-sm-2">Name</dt>
-    <dd class = "col-sm-10">
-        <%= user.name %>
-    </dd>
-    <dt class = "col-sm-2">Username</dt>
-    <dd class = "col-sm-10">
-        <%= user.username %>
-    </dd>
-    <dt class = "col-sm-2">Phone</dt>
-    <dd class = "col-sm-10">
-        <%= user.phone %>
-    </dd>
-    <dt class = "col-sm-2">Email</dt>
-    <dd class = "col-sm-10">
-        <%= user.email %>
-    </dd>
-    <a href="/user/<%= user._id%>/edit"><button class="btn btn-dark btn-padding">Edit</button></a>
-    <form action="/user/<%= user._id%>?_method=DELETE" method="POST"><button class="btn btn-dark btn-padding">Delete</button></form>
-</dl>
-<a href="/item/new"><button class="btn btn-dark btn-padding">Add new item</button></a>
+<div class="row show-top-margin">
+    <div class="col-md-4">
+        <img src = "/images/default_dp.jpg" class = "img-thumbnail">
+    </div>
+    <div class="col-md-8">
+        <div><h2>Name</h2></div>
+        <div><h5><%= user.name %></h5></div>
+        <div><h2>Username</h2></div>
+        <div><h5><%= user.username %></h5></div>
+        <div><h2>Phone</h2></div>
+        <div><h5><%= user.phone %></h5></div>
+        <div><h2>Email</h2></div>
+        <div><h5><%= user.email %></h5></div>
+        <% if(currentUser && user._id.equals(currentUser._id)){ %>
+            <div>
+                <a href="/user/<%= user._id%>/edit"><button class="btn btn-sm btn-outline-dark">Edit</button></a>
+                <form class = "disp-inline" action="/user/<%= user._id%>?_method=DELETE" method="POST"><button class="btn btn-sm btn-dark">Delete</button></form>
+                <a href="/item/new"><button class="btn btn-sm btn-dark">Add new item</button></a>
+            </div>
+        <% } %>
+    </div>
+</div>
 <%- include("../partials/footer"); %>

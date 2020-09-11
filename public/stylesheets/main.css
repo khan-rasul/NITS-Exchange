@@ -99,3 +99,9 @@
 body {
     font-family: 'Montserrat', sans-serif;
 }
+.show-top-margin{
+    margin-top: 5em;
+}
+.show-vr{
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
