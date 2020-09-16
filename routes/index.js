@@ -25,7 +25,7 @@ router.post("/signin" ,passport.authenticate("local",
 // sign out
 router.get("/signout" , function(req , res){
     req.logout();
-    res.redirect("/item");
+    res.redirect("back");
 
 })
 // export module

@@ -1,0 +1,24 @@
+<%- include("../partials/header"); %>
+<div id = "users" data-sender="<%=sender%>" data-receiver="<%= (chat.firstUser.equals(sender) ? chat.secondUser : chat.firstUser) %>"></div>
+
+<div class="chat-container">
+    <ul class="list-group" id = "messages">
+        <% chat.messages.forEach(function(message){ if(sender === message.receiver){ %>
+            <div class = "text-left" >
+                <li class="chat-padding btn btn-lg btn-outline-dark btn-padding"><%= message.content%></li>
+            </div>    
+            <% }else{ %>
+                <div class="text-right">
+                    <li class="chat-padding btn btn-lg btn-dark btn-padding"><%= message.content%></li>
+                </div>
+            <% } }) %>    
+    </ul>
+</div>
+<form action="#" class = "form-inline margin-top" id = "send">
+    <input style="width: 87.5%;" class = "form-control btn-padding " type="text" name="message">
+    <input class = "form-control btn-dark" type="submit" value="Send">
+</form>
+
+<script src = "/socket.io/socket.io.js"></script>
+<script src = "/scripts/clientSocket.js"></script>
+<%- include("../partials/footer"); %>
