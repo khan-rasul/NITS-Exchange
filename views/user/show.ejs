@@ -4,21 +4,57 @@
         <img src = "/images/default_dp.jpg" class = "img-thumbnail">
     </div>
     <div class="col-md-8">
-        <div><h2>Name</h2></div>
-        <div><h5><%= user.name %></h5></div>
-        <div><h2>Username</h2></div>
-        <div><h5><%= user.username %></h5></div>
-        <div><h2>Phone</h2></div>
-        <div><h5><%= user.phone %></h5></div>
-        <div><h2>Email</h2></div>
-        <div><h5><%= user.email %></h5></div>
-        <% if(currentUser && user._id.equals(currentUser._id)){ %>
-            <div>
-                <a href="/user/<%= user._id%>/edit"><button class="btn btn-sm btn-outline-dark">Edit</button></a>
-                <form class = "disp-inline" action="/user/<%= user._id%>?_method=DELETE" method="POST"><button class="btn btn-sm btn-dark">Delete</button></form>
-                <a href="/item/new"><button class="btn btn-sm btn-dark">Add new item</button></a>
+        <div><h5>Name</h5></div>
+        <div><h6><%= user.name %></h6></div>
+        <div><h5>Username</h5></div>
+        <div><h6><%= user.username %></h6></div>
+        <% if(user.phone){ %>
+            <div><h5>Phone</h5></div>
+            <div><h6><%= user.phone %></h6></div>
+        <% } %>
+        <% if(user.email){ %>
+            <div><h5>Email</h5></div>
+            <div><h6><%= user.email %></h5></div>
+        <% } %>
+
+        <div style="position: absolute; bottom: 0">
+            <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                <div>
+                    <a href="/user/<%= user._id%>/edit"><button class="btn btn-sm btn-outline-dark">Edit</button></a>
+                    <form class = "disp-inline" action="/user/<%= user._id%>?_method=DELETE" method="POST"><button class="btn btn-sm btn-dark">Delete</button></form>
+                    <a href="/item/new"><button class="btn btn-sm btn-dark">Add new item</button></a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<% if(items.length>0){ %>
+    <div class="row margin-top">
+        <div class="posts">
+            <h4 class="posts-heading">
+                <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                    My Posts
+                <% } else{ %>
+                    <%= user.name + "\'s Posts" %>
+                <% } %>
+            </h4>
+            <hr>
+        </div>
+        <% for(var i=items.length-1; i>=0; i--){ %>
+            <div class = "col-md-4 col-sm-6">
+                <div class="card" style="margin: 1em">
+                    <div class="card-body" style="margin: 2em">
+                        <div>
+                            <span class="align-left-top item-note-sz"><b>For <%= items[i].category %></b></span>
+                        </div>
+                        <h5 class="card-title text-center"><%= items[i].title %></h5>
+                        <div class = "text-center">
+                            <a href="/item/<%= items[i]._id%>" class="btn btn-sm btn-dark">Details</a>                    
+                        </div>
+                    </div>
+                    </div>
             </div>
         <% } %>
     </div>
-</div>
+<% } %>
 <%- include("../partials/footer"); %>

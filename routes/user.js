@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Item = require("../models/item");
 const middleware = require("../middleware");
 
 // root route
@@ -31,7 +32,7 @@ router.post("/" , function(req , res){
     User.register(newUser , req.body.password, function(err , user){
         if(err){
             console.log(err);
-            return res.render("user/new");
+            return res.render("user/new", {error: err.message});
         }
         passport.authenticate("local")(req, res, function(){
             res.redirect("/user"); 
@@ -39,16 +40,31 @@ router.post("/" , function(req , res){
     })
 });
 
+// user profile show route
 router.get("/:id" , function(req , res){
     User.findById(req.params.id , function(err , user){
         if(err){
             console.log(err);
         }
         else{
-            res.render("user/show", {user : user});
+            items = [];
+            Item.find({}, function(err, itemArr){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    itemArr.forEach(function(item){
+                        if(item.author.id == req.params.id){
+                            items.push(item);
+                        }
+                    });
+                    res.render("user/show", {user: user, items: items});
+                }
+            });
         }
     })
 });
+
 // edit user details route
 router.get("/:id/edit", middleware.checkUserOwnership, function(req, res){
     User.findById(req.params.id , function(err , user){
@@ -61,12 +77,11 @@ router.get("/:id/edit", middleware.checkUserOwnership, function(req, res){
     })
 });
 router.put("/:id", middleware.checkUserOwnership, function(req , res){
-    console.log(req.body.user);
     User.findByIdAndUpdate(req.params.id , req.body.user, function(err , user){
         if(err){
             console.log(err);
         }
-        else{
+        else if(req.body.password){
             console.log(user);
             user.setPassword(req.body.password , function(err , user){
                 if(err){

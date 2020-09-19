@@ -6,22 +6,31 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="title" class="control-label">Title</label>
-                    <input id="title" name='item[title]' type='text' class="form-control" />
+                    <input id="title" name='item[title]' type='text' class="form-control" required/>
                 </div>
                 <div class="form-group">
                     <label for="price" class="control-label">Price</label>
-                    <input id="price" name='item[price]' type='number' class="form-control" />
-                </div>   
-            </div>
-            <div class="col-md-6">
+                    <input id="price" name='item[price]' type='number' class="form-control" required/>
+                </div> 
                 <div class="form-group">
-                    <label for="description" class="control-label">Description</label> 
-                    <textarea name="item[description]" class="form-control"></textarea>
-                </div>
+                    <select name='item[category]' class="custom-select" required>
+                      <option value="">Choose item category</option>
+                      <option value="Sale">Sell</option>
+                      <option value="Rent">Rent</option>
+                      <option value="Share">Share</option>
+                    </select>
+                </div>  
                 <div class="form-group">
                     <label for="image" class="control-label">Upload Images</label> 
                     <input type="file" name="images" multiple>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description" class="control-label">Description</label> 
+                    <textarea style="resize: none;" rows="7" name="item[description]" class="form-control"></textarea>
+                </div>
+                
             </div>
         </div>
         <div class="form-group center"> 

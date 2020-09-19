@@ -1,56 +1,52 @@
 <%- include("../partials/header"); %>
 <div class="row show-top-margin">
     <div class="col-md-5">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <div class="relative">
-                <ol class="carousel-indicators">
-                    <% var i=0; %>
-                    <% item.images.forEach(function(image){ %>
-                        <% if(i==0){ %>
-                            <li data-target="#carouselExampleIndicators" data-slide-to= <%= i.toString() %> class="active"></li>
-                        <% } else{ %>
-                            <li data-target="#carouselExampleIndicators" data-slide-to= <%= i.toString() %>></li>
-                        <% } %>
-                        <% i+=1; %>
-                    <% }); %>
-                </ol>
-                <div class="carousel-inner">
-                    <% var i=0; %>
-                    <% item.images.forEach(function(image){ %>
-                        <% if(i==0){ %>
-                            <div class="carousel-item active">
-                                <img src="data:image/<%=image.contentType%>;base64,<%=image.data.toString('base64')%>" class="d-block image">
-                            </div>
-                        <% } else{ %>
-                            <div class="carousel-item">
-                                <img src="data:image/<%=image.contentType%>;base64,<%=image.data.toString('base64')%>" class="d-block image">
-                            </div>
-                        <% } %>
-                        <% i+=1; %>
-                    <% }); %>
+        <% if(item.images.length>0){ %>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="relative">
+                    <ol class="carousel-indicators">
+                        <% var i=0; %>
+                        <% item.images.forEach(function(image){ %>
+                            <% if(i==0){ %>
+                                <li data-target="#carouselExampleIndicators" data-slide-to= "<%= i.toString() %>" class="active"></li>
+                            <% } else{ %>
+                                <li data-target="#carouselExampleIndicators" data-slide-to= "<%= i.toString() %>"></li>
+                            <% } %>
+                            <% i+=1; %>
+                        <% }); %>
+                    </ol>
+                    <div class="carousel-inner">
+                        <% var i=0; %>
+                        <% item.images.forEach(function(image){ %>
+                            <% if(i==0){ %>
+                                <div class="carousel-item active">
+                                    <img src="data:image/<%=image.contentType%>;base64,<%=image.data.toString('base64')%>" class="d-block image">
+                                </div>
+                            <% } else{ %>
+                                <div class="carousel-item">
+                                    <img src="data:image/<%=image.contentType%>;base64,<%=image.data.toString('base64')%>" class="d-block image">
+                                </div>
+                            <% } %>
+                            <% i+=1; %>
+                        <% }); %>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a id ="pos" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a id ="pos" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
-        </div>
-    </div>
-    <div class="col-md-7">
-        <div><h2>Title</h2></div>
-        <div><h5><%= item.title %></h5></div>
-        <div><h2>Price</h2></div>
-        <div><h5><%= item.price %></h5></div>
-        <div><h2>Created By</h2></div>
-        <div><a href="/user/<%=item.author.id%>"><h5 class="text-dark"><%= item.author.name %></h5></a></div>
-        <div><h2>Description</h2></div>
-        <div><p><%= item.description %></p></div>
+        <% } else{ %>
+            <div class="image no-image">
+                <center><p id="no-img-font">No Image</p></center>
+            </div>
+        <% } %>
         <% if(currentUser && item.author.id.equals(currentUser._id)){ %>
-            <div>
+            <div class="margin-top">
                 <a class="btn btn-sm btn-outline-dark" href="/item/<%= item._id %>/edit">Edit</a>
                 <form action="/item/<%= item._id %>?_method=DELETE" method="POST" class="disp-inline">
                     <button class="btn btn-sm btn-dark">Delete</button>
@@ -58,12 +54,26 @@
             </div>
         <% } %>
     </div>
+    <div class="col-md-7">
+        <div><h5>Title</h5></div>
+        <div><h6><%= item.title %></h6></div>
+        <div><h5>Price</h5></div>
+        <div><h6> &#8377 <%= item.price %></h6></div>
+        <div><h5>Posted By</h5></div>
+        <div><a href="/user/<%=item.author.id%>"><h6 class="text-dark"><%= item.author.name %></h6></a></div>
+        <div><h5>Item Category</h5></div>
+        <div><h6><%= item.category %></h6></div>
+        <% if(item.description){ %>
+            <div><h5>Description</h5></div>
+            <div><p><%= item.description %></p></div>
+        <% } %>
+    </div>
 </div>
 
 <div class="row show-top-margin">
     <div class="col-md-5 center show-vr">
-        <h1>Comments</h1>
-        <button class="btn btn-lg btn-dark" onclick="openNewForm()">Add Comment</button>
+        <h2>Comments</h2>
+        <button class="btn btn-dark" onclick="openNewForm()">Add Comment</button>
         <div id="commentForm">
             <form action="/item/<%= item._id %>/comment" method="POST">
                 <button type="button" class="close" aria-label="Close">
@@ -79,16 +89,17 @@
         </div>
     </div>
     <div class="col-md-7">
-        <% item.comments.forEach(function(comment){ %>
+        <% for(var i=item.comments.length-1; i>=0; i--){ %>
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-6">
-                    <h4><%= comment.author.name %></h4>
-                    <h6 class="text-muted"><em><%= comment.text %></em></h6>
+                    <h5><%= item.comments[i].author.name %></h5>
+                    <span class="pull-right item-note-sz"><em><%= moment(item.comments[i].createdAt).fromNow() %></em></span>
+                    <p class="text-muted"><%= item.comments[i].text %></p>
                 </div>
                 <div class="col-md-6">
-                    <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                    <% if(currentUser && item.comments[i].author.id.equals(currentUser._id)){ %>
                         <div class = "disp-inline"><button class="btn btn-sm btn-outline-dark disp-inline hover" onclick="openEditForm()">Edit</button>
-                            <form class ="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
+                            <form class ="disp-inline" action="/item/<%= item._id %>/comment/<%= item.comments[i]._id %>?_method=DELETE" method="POST">
                                 <button class="btn btn-sm btn-dark">Delete</button>
                             </form>
                         </div>              
@@ -97,12 +108,12 @@
                 
     
                 <div id="editForm">
-                    <form class="disp-inline" action="/item/<%= item._id %>/comment/<%= comment._id %>?_method=PUT" method="POST">
+                    <form class="disp-inline" action="/item/<%= item._id %>/comment/<%= item.comments[i]._id %>?_method=PUT" method="POST">
                         <button type="button" class="close" aria-label="Close">
                             <span aria-hidden="true" class="hover" onclick="closeEditForm()">&times;</span>
                         </button>
                         <div class="form-group mx-sm-1 center">
-                            <textarea type="text" name="comment[text]" class="margin-top" id="inputboxEdit"><%= comment.text %></textarea>
+                            <textarea type="text" name="comment[text]" class="margin-top" id="inputboxEdit"><%= item.comments[i].text %></textarea>
                         </div>
                         <div class="center">
                             <button class="btn btn-xs btn-primary disp-inline">Update</button>
@@ -110,7 +121,7 @@
                     </form>
                 </div>
             </div>   
-        <% }); %>
+        <% } %>
     </div>
 </div>
 

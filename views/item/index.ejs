@@ -6,21 +6,52 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-9">
+        <p><b>Filter items:</b></p> 
+        <form action="/item" method="GET">
+            <% if(Array.isArray(category) && category.length == 3) { category = []; } %>
+            <div class="form-check form-check-inline">
+                <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Buy" <%= (category.includes("Sale") ? "checked" : "") %>>
+                <label class="form-check-label" for="inlineCheckbox1">Buy</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Rent" <%= (category.includes("Rent") ? "checked" : "") %>>
+                <label class="form-check-label" for="inlineCheckbox2">Rent</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Share" <%= (category.includes("Share") ? "checked" : "") %>>
+                <label class="form-check-label" for="inlineCheckbox3">Share</label>
+            </div>
+            <button class="btn btn-dark btn-sm">Apply Filter</button>
+        </form>
+    </div>
+    <div class="col-md-3">
+        <a href="/item/new" class="btn btn-dark float-right">Add New Item</a>
+    </div>
+</div>
+<hr>
+
 <div class = "row">
-    <% items.forEach(item=>{ %>
+    <% for(var i=items.length-1; i>=0; i--){ %>
         <div class = "col-md-4 col-sm-6">
             <div class="card" style="margin: 1em">
                 <div class="card-body" style="margin: 2em">
-                  <h5 class="card-title text-center"><%= item.title %></h5>
+                    <div>
+                        <span class="align-left-top item-note-sz"><b>For <%= items[i].category %></b></span>
+                    </div>
+                    <h5 class="card-title text-center"><%= items[i].title %></h5>
+                    <h5 class="card-title text-center"> &#8377 <%= items[i].price %></h5>
                     <div class = "text-center">
-                        <a href="/item/<%= item._id%>" class="btn btn-sm btn-dark">Details</a>                    
+                        <a href="/item/<%= items[i]._id%>" class="btn btn-sm btn-dark">Details</a>                    
+                    </div>
+                    <div>
+                        <span class="align-left-bottom item-note-sz"><%= items[i].author.name %></span>
+                        <span class="align-right-bottom item-note-sz"><%= moment(items[i].createdAt).fromNow() %></span>
                     </div>
                 </div>
               </div>
         </div>
-    <%});%>
-</div>
-<div>
-    <a href="/item/new" class="btn btn-dark">Add New Item</a>
+    <%}%>
 </div>
 <%- include("../partials/footer"); %>

@@ -6,14 +6,20 @@ var middleware = require("../middleware");
 
 // root route
 router.get("/" , function(req , res){
-    Item.find({} , function(err , items){
+    var category = req.query.category;
+    if(req.query.category === undefined){
+        category = ['Sale', 'Rent', 'Share'];
+    }
+    Item.find({
+        category: { $in: category }
+    }).populate("author").exec(function(err , items){
         if(err){
             console.log(err);
         }
         else{
-            res.render("item/index" , {items : items});
+            res.render("item/index" , {items : items, category: category});
         }
-    })  
+    }); 
 });
 
 // add new item
@@ -68,18 +74,20 @@ router.put("/:id", [middleware.isLoggedIn, middleware.upload], function(req , re
     req.files.forEach(function(file){
         updatedImg.push({data: file.buffer, contentType: "image/jpeg"});
     });
-    Item.findByIdAndUpdate(req.params.id, {
-            $set: {
-                images : updatedImg, 
-                title: req.body.item.title,
-                price: req.body.item.price
-            }
-        }, function(err, item){
+    Item.findById(req.params.id, function(err, item){
         if(err){
             console.log(err);
         }
         else{
-            res.redirect("/item/" + req.params.id);
+            req.body.item.images = updatedImg;
+            Item.findByIdAndUpdate(req.params.id, req.body.item, function(err, item){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.redirect("/item/" + req.params.id);
+                }
+            });
         }
     });
 });

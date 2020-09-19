@@ -3,6 +3,8 @@ var itemSchema = mongoose.Schema({
     title : String,
     price : Number,
     description: String,
+    category: String,
+    createdAt: { type: Date, default: Date.now },
     author: {
         id: {
            type: mongoose.Schema.Types.ObjectId,

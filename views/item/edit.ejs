@@ -11,16 +11,24 @@
                 <div class="form-group">
                     <label for="price" class="control-label">Price</label>
                     <input id="price" name='item[price]' type='number' class="form-control" value="<%= item.price %>"/>
+                </div> 
+                <div class="form-group">
+                    <select name='item[category]' class="custom-select" required>
+                        <option value="">Choose item category</option>
+                        <option value="Sale" <%= (item.category === "Sale" ? "selected" : "") %>>Sell</option>
+                        <option value="Rent" <%= (item.category === "Rent" ? "selected" : "") %>>Rent</option>
+                        <option value="Share" <%= (item.category === "Share" ? "selected" : "") %>>Share</option>
+                    </select>
                 </div>   
+                <div class="form-group">
+                    <label for="image" class="control-label">Upload Images</label> 
+                    <input type="file" name="images" multiple>
+                </div> 
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="description" class="control-label">Description</label> 
-                    <textarea name="item[description]" class="form-control"><%= item.description %></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="image" class="control-label">Upload Images</label> 
-                    <input type="file" name="images" multiple>
+                    <textarea style="resize: none;" rows="5" name="item[description]" class="form-control"><%= item.description %></textarea>
                 </div>
             </div>
         </div>
