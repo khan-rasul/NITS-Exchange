@@ -47,17 +47,11 @@ router.get("/:id" , function(req , res){
             console.log(err);
         }
         else{
-            items = [];
-            Item.find({}, function(err, itemArr){
+            Item.find({author: {id : user._id , name : user.name} }, function(err, items){
                 if(err){
                     console.log(err);
                 }
                 else{
-                    itemArr.forEach(function(item){
-                        if(item.author.id == req.params.id){
-                            items.push(item);
-                        }
-                    });
                     res.render("user/show", {user: user, items: items});
                 }
             });
