@@ -1,0 +1,14 @@
+<%- include("../partials/header"); %>
+<h1 class="center margin-top"><i class="fas fa-sign-in-alt"></i> Chat </h1>
+<div style="width: 40%; margin: 40px auto;">
+    <form action="/user/<%=user._id%>/chat" method="POST">
+        <div class="form-group center">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" name="username" placeholder="Enter Username" required> 
+            </div>  
+            <button class="btn btn-dark btn-padding">Sign In</button>
+        </div>
+    </form>
+</div>
+<%- include("../partials/footer"); %>

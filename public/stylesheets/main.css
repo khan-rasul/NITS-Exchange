@@ -161,3 +161,8 @@ body {
 .show-vr{
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+.chat-padding{
+    margin-top: 9px;
+    width: fit-content;
+}

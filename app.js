@@ -8,7 +8,9 @@ var express        = require("express"),
     flash          = require("connect-flash"),
     localStrategy  = require("passport-local").Strategy,
     User           = require("./models/user"),
-    compression    = require("compression");
+    compression    = require("compression"),
+    http           = require("http").createServer(app),
+    serverSocket         = require("./serverSocket");
 
 //============
 // app config
@@ -27,7 +29,13 @@ app.locals.moment = require('moment');
 var indexRoutes    = require("./routes/index"),
     userRoutes     = require("./routes/user"),
     itemRoutes     = require("./routes/item"),
-    commentRoutes  = require("./routes/comment");
+    commentRoutes  = require("./routes/comment"),
+    chatRoutes     = require("./routes/chat");
+
+//==================
+// socket.io config
+//==================
+serverSocket(http);
 
 //=================
 // database config
@@ -66,10 +74,11 @@ app.use('/', indexRoutes);
 app.use('/user', userRoutes);
 app.use('/item' , itemRoutes);
 app.use('/item/:id/comment', commentRoutes);
+app.use('/user/:id/chat', chatRoutes);
 
 //========================
 // listening on port 3000
 //========================
-app.listen(3000 , function(){
+http.listen(3000 , function(){
     console.log("Server Started on port 3000. :)");
 });

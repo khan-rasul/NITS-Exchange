@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Item = require("./models/item");
 var Comment = require("./models/comment");
 var User = require("./models/user");
-const user = require("./models/user");
+var Chat = require("./models/chat");
 
 var items = [
     {title: "Drafter" , price: 150},
@@ -23,10 +23,25 @@ var users = [
         username: "1715011",
         email: "kassandra@odyssey.gr",
         phone: "9876543210"
+    },
+    {
+        name: "Phoebe",
+        username: "1715007",
+        email: "phoebe@odyssey.gr",
+        phone: "1324657985"
     }
 ]
 
 function seedDB(){
+    Chat.deleteMany({}, function(err){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("Chats removed");
+        }
+    })
+
     Comment.deleteMany({}, function(err){
         if(err){
             console.log(err);
